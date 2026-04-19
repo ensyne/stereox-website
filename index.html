@@ -3,215 +3,395 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StereoX - Rediscover Music</title>    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/3.0.0/pure-min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/3.0.0/grids-responsive-min.css">
+    <title>StereoX - Rediscover Music</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Space+Grotesk:wght@400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
         }
-        
-        .container {
+
+        :root {
+            --zinc-50: #fafafa;
+            --zinc-100: #f4f4f5;
+            --zinc-200: #e4e4e7;
+            --zinc-300: #d4d4d8;
+            --zinc-400: #a1a1aa;
+            --zinc-500: #71717a;
+            --zinc-600: #52525b;
+            --zinc-800: #27272a;
+            --zinc-900: #18181b;
+            --zinc-950: #09090b;
+            --rose-500: #e11d48;
+            --rose-400: #fb7185;
+            --canvas: #fafafa;
+            --card: #ffffff;
+            --border: rgba(0, 0, 0, 0.06);
+            --shadow-tinted: rgba(9, 9, 11, 0.04);
+        }
+
+        body {
+            font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--zinc-800);
+            background: var(--canvas);
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Layout ── */
+        .site-wrapper {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 40px;
+            padding: 24px;
         }
-        
-        .hero-card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: calc(100dvh - 48px);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px -15px var(--shadow-tinted);
         }
-        
+
+        /* ── Left: Content ── */
         .hero-content {
-            padding: 60px;
+            padding: 80px 72px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 500px;
+            align-items: flex-start;
         }
-        
-        .hero-image-wrapper {
-            padding: 40px;
+
+        .logo {
+            height: 40px;
+            width: auto;
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+        }
+
+        .headline {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            color: var(--zinc-950);
+            margin-bottom: 24px;
+            max-width: 520px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+        }
+
+        .headline .accent {
+            color: var(--rose-500);
+        }
+
+        .highlight {
+            color: var(--rose-500);
+            font-weight: 500;
+        }
+
+        .tagline {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--zinc-500);
+            max-width: 440px;
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+        }
+
+        .sub {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            font-size: 1.05rem;
+            color: var(--zinc-400);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+        }
+
+        .cta {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+        }
+
+        .cta a {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .cta a:hover {
+            transform: translateY(-2px);
+        }
+
+        .cta a:active {
+            transform: translateY(0);
+        }
+
+        .cta img {
+            width: 160px;
+            height: auto;
+            display: block;
+        }
+
+        /* ── Right: Image ── */
+        .hero-visual {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
+            padding: 60px 48px;
+            background: var(--zinc-50);
+            border-left: 1px solid var(--border);
             position: relative;
+            overflow: hidden;
         }
-        
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.04) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
         .hero-image {
             width: 100%;
-            max-width: 500px;
+            max-width: 440px;
             height: auto;
             object-fit: contain;
             position: relative;
             z-index: 1;
+            opacity: 0;
+            transform: translateY(24px);
+            animation: reveal 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
-        
-        h1 {
-            font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 3em;
-            margin: 0 0 0.3em 0;
-            font-weight: 700;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
+
+        /* ── Features strip ── */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
         }
-        
-        .tagline {
-            font-size: 1.1em;
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--rose-500);
+            border-radius: 0;
+            padding: 32px 28px;
+            box-shadow: 0 20px 40px -15px var(--shadow-tinted);
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+
+        .feature-card:nth-child(1) {
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+        }
+        .feature-card:nth-child(2) {
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+        }
+        .feature-card:nth-child(3) {
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards;
+        }
+
+        .feature-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--rose-500);
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--zinc-900);
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--zinc-500);
             line-height: 1.6;
-            margin-bottom: 1.2em;
-            color: #2d3748;
-            font-weight: 400;
         }
-        
-        .subtitle {
-            font-size: 1.1em;
-            color: #2d3748;
-            margin-bottom: 2.5em;
-            font-weight: 400;
-            line-height: 1.6;
+
+        /* ── Footer ── */
+        .footer {
+            padding: 40px 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
         }
-        
-        .cta {
-            margin-top: 1em;
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--zinc-400);
+            letter-spacing: 0.01em;
         }
-        
-        .cta a {
-            display: inline-block;
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
         }
-        
-        .cta img {
-            width: 180px;
-            height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--zinc-400);
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
-        
-        .cta a:hover img {
-            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25));
+
+        .footer-links a:hover {
+            color: var(--zinc-800);
         }
-        
+
+        /* ── Animation ── */
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
             .hero-content {
-                padding: 50px 40px;
+                padding: 60px 48px;
             }
-            
-            h1 {
-                font-size: 3.5em;
-                letter-spacing: -2px;
+
+            .hero-visual {
+                padding: 48px 32px;
             }
         }
-        
+
         @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
+            .site-wrapper {
+                padding: 12px;
             }
-            
-            .hero-card {
-                border-radius: 16px;
-            }
-            
-            .hero-content {
-                padding: 40px 30px;
+
+            .hero {
+                grid-template-columns: 1fr;
                 min-height: auto;
-                order: 2;
+                border-radius: 0;
             }
-            
-            .hero-image-wrapper {
-                padding: 30px 20px;
-                order: 1;
+
+            .hero-visual {
+                border-left: none;
+                border-top: 1px solid var(--border);
+                padding: 40px 24px;
             }
-            
-            h1 {
-                font-size: 2.5em;
-                letter-spacing: -1.5px;
-                margin-bottom: 0.4em;
+
+            .hero-content {
+                padding: 40px 28px 48px;
             }
-            
-            .tagline {
-                font-size: 1.1em;
-                margin-bottom: 1em;
+
+            .logo {
+                height: 32px;
+                margin-bottom: 32px;
             }
-            
-            .subtitle {
-                font-size: 1em;
-                margin-bottom: 2em;
+
+            .features {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 12px;
             }
-            
-            .cta img {
-                width: 170px;
+
+            .feature-card {
+                border-radius: 0;
+                padding: 24px 22px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
             }
         }
-        
+
         @media (max-width: 480px) {
             .hero-content {
-                padding: 30px 20px;
+                padding: 32px 22px 40px;
             }
-            
-            .hero-image-wrapper {
-                padding: 20px 15px;
+
+            .hero-visual {
+                padding: 32px 20px;
             }
-            
-            h1 {
-                font-size: 2em;
-                letter-spacing: -1px;
-            }
-            
-            .tagline {
-                font-size: 1em;
-            }
-            
-            .subtitle {
-                font-size: 0.95em;
+
+            .headline {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="hero-card">
-        <div class="pure-g">
-            <div class="pure-u-1 pure-u-md-1-2">
-                <div class="hero-content">
-                    <img src="stereox.svg" alt="StereoX" style="height: 50px; width: auto; margin-bottom: 0.5em; display: block; margin-left: 0; margin-right: auto;">
-                    <p class="tagline">A tactile, visually rich digital museum for your music library. Rediscover albums through a vinyl-inspired interface that restores history, context, and meaning to listening.</p>
-                    <p class="subtitle">Browse your collection. Play what matters. See them live.</p>
-                    <div class="cta">
-                        <a href="https://apps.apple.com/us/app/stereo-music-player/id1418449715?mt=8" target="_blank">
-                            <img src="download.svg" alt="Download on the App Store">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="pure-u-1 pure-u-md-1-2">
-                <div class="hero-image-wrapper">
-                    <img src="hero.png" alt="StereoX App Interface" class="hero-image">
-                </div>
+<div class="site-wrapper">
+    <div class="hero">
+        <div class="hero-content">
+            <img src="stereox.svg" alt="StereoX" class="logo">
+            <p class="tagline">Tactile, visually rich, and deeply personal. StereoX restores <span class="highlight">history, context, and meaning</span> to every album in your library through a vinyl-inspired interface.</p>
+            <p class="sub">Browse your collection. Play what matters. See them live.</p>
+            <div class="cta">
+                <a href="https://apps.apple.com/us/app/stereo-music-player/id1418449715?mt=8" target="_blank">
+                    <img src="download.svg" alt="Download on the App Store">
+                </a>
             </div>
         </div>
+        <div class="hero-visual">
+            <img src="hero.png" alt="StereoX App" class="hero-image">
+        </div>
     </div>
+
+    <!--<div class="features">
+        <div class="feature-card">
+            <div class="feature-label">Collection</div>
+            <div class="feature-title">Your library, restored</div>
+            <p class="feature-desc">Every album rendered with full artwork, liner notes, and release context. No algorithmic noise.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-label">Playback</div>
+            <div class="feature-title">Listen with intention</div>
+            <p class="feature-desc">A player built around the album as a complete work. Queue by mood, era, or instinct.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-label">Discovery</div>
+            <div class="feature-title">See them live</div>
+            <p class="feature-desc">Upcoming shows from artists in your collection surfaced without the search. Never miss a set.</p>
+        </div>
+    </div>-->
+
+    <footer class="footer">
+        <span class="footer-text">&copy; 2026 StereoX</span>
+        <div class="footer-links">
+            <a href="https://apps.apple.com/us/app/stereo-music-player/id1418449715?mt=8" target="_blank">App Store</a>
+        </div>
+    </footer>
 </div>
 </body>
 </html>
